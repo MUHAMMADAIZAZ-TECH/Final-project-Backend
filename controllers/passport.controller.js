@@ -19,7 +19,7 @@ exports.loginfailed = async (req, res) => {
 };
 exports.logout = async (req, res, next) => {
   try {
-    await axios.post('https://oauth2.googleapis.com/revoke', null, {
+   const response = await axios.post('https://oauth2.googleapis.com/revoke', null, {
       params: {
         token: req.cookies.session
       },
@@ -27,10 +27,12 @@ exports.logout = async (req, res, next) => {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
-    console.log("User logged out successfully")
-    res.redirect(process.env.BASE_URL);
+    if(response){
+      console.log("User logged out successfully")
+      res.redirect(process.env.BASE_URL);
+    }
   } catch (error) {
-    res.status(500).send({message:error.message});
+    res.redirect(process.env.BASE_URL);
   }
 };
 

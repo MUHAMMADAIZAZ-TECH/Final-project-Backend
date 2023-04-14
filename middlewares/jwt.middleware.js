@@ -14,7 +14,7 @@ exports.authenticate = async (req, res, next) => {
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
-  if(req.query && req.query.UserType==="google"){
+  if(req.body && req.body.Provider==="google"){
     axios({
       method: 'GET',
       url: 'https://accounts.google.com/o/oauth2/v2/auth',
