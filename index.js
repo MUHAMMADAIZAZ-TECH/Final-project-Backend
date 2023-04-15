@@ -28,7 +28,7 @@ app.use(passport.session());
 //middlewares
 app.use(
   cors({
-    origin: [process.env.CLIENT_ORIGIN],
+    origin: "*",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
