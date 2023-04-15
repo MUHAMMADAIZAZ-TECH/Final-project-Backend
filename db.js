@@ -6,7 +6,7 @@ module.exports = () => {
     useNewUrlParser: true,
   };
   try {
-    mongoose.connect(process.env.DB);
+    mongoose.connect(process.env.DB,connectionParams);
     console.log("Connected to database success");
   } catch (error) {
     console.log("Error", error);

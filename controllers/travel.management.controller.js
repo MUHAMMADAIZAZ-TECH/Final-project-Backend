@@ -3,8 +3,8 @@ exports.NewBooking = async (req, res) => {
   try {
    const NewBooking = new Booking(req.body.state)
     console.log(NewBooking)
-    const savedDetails = await NewBooking.save();
-    res.status(200).json({ savedDetails: savedDetails, message: "Successfully Booked" });
+    await NewBooking.save();
+    res.status(200).json({ message: "Successfully Booked" });
    
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -25,8 +25,9 @@ exports.deleteBooking = async (req, res) => {
     const { BookingId } = req.body;
     const Selected = await Booking.findOne({ BookingId: BookingId });
     const deleted = await Selected.deleteOne();
+    const UpdatedList = await Booking.find();
     if(deleted){
-      res.status(200).json({ message: "Successfully Deleted" });
+      res.status(200).json({ message: "Successfully Deleted",UpdatedList:UpdatedList });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,8 +45,9 @@ exports.updateBooking = async (req, res) => {
       EndDate: EndDate,
     }
     const Updated = await Booking.findByIdAndUpdate(_id, { $set: object}, { new: true });
+    const UpdatedList = await Booking.find();
     if(Updated){
-      res.status(200).json({ message: "Successfully Updated",Updated:Updated });
+      res.status(200).json({ message: "Successfully Updated",UpdatedList:UpdatedList });
     }
   } catch (error) {
     console.log(error)
